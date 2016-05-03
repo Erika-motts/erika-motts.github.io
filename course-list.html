@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  
+
+  
+  <!-- Parse Server JS SDK Credentials  -->
+<script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
+<script type="text/javascript">Parse.initialize("myAppId"); Parse.serverURL = 'http://45.55.141.129:1337/parse';</script>
+
+<script>
+var formApp = angular.module('formApp', []);
+
+// create angular controller and pass in $scope and $http
+
+
+// Course List Services
+	formApp.factory('CourseList',['$http','PARSE_CREDENTIALS',function($http,PARSE_CREDENTIALS){
+	
+    return {
+        getAll:function(){
+            return $http.get('http://45.55.141.129:1337/parse/classes/Course',{
+                headers:{
+                    'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
+                    'Content-Type':'application/json'                     }
+            });
+        },
+        get:function(id){
+            return $http.get('http://45.55.141.129:1337/parse/classes/Course/'+id,{
+                headers:{
+                    'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
+                    'Content-Type':'application/json'                }
+            });
+        },
+        create:function(data){
+            return $http.post('http://45.55.141.129:1337/parse/classes/Course',data,{
+                headers:{
+                    'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
+                    'Content-Type':'application/json'
+                }
+            });
+        },
+        edit:function(id,data){
+            return $http.put('http://45.55.141.129:1337/parse/classes/Course/'+id,data,{
+                headers:{
+                    'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
+                    'Content-Type':'application/json'
+                }
+            });
+        },
+        delete:function(id){
+            return $http.delete('http://45.55.141.129:1337/parse/classes/Course/'+id,{
+                headers:{
+                    'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
+                    'Content-Type':'application/json'
+                }
+            });
+        }
+    }
+    
+}]).value('PARSE_CREDENTIALS',{
+    APP_ID: 'myAppId'
+})
+
+// Course List Controller
+   formApp.controller('formController',function($scope,CourseList){
+	   var currentUser = Parse.User.current();
+	      $scope.logout = function(){
+			    //logout current user
+        if ( currentUser ) {
+            Parse.User.logOut();
+			$window.location.href = 'login.html';
+
+
+		   }
+		  }
+
+	   
+	   
+	   $scope.showQR = function(){
+		var qrcode = new QRCode("qrcode", {
+		text: "http://jindo.dev.naver.com/collie",
+		width: 128,
+		height: 128,
+		colorDark : "#000000",
+		colorLight : "#ffffff",
+		correctLevel : QRCode.CorrectLevel.H
+		});
+	}
+	
+	  CourseList.getAll().success(function(data){
+		$scope.items = data.results;	
+	}).then(function(result) {
+   // _this.breweries = result.data.breweries;
+  })
+	  
+
+   });
+</script>
+
+
+
+</head>
+
+<body ng-app="formApp">
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">QRHere - Teacher Portal</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="teacher-home.html">Home</a></li>
+      <li ><a href="register-course.html">Register a Course</a></li>
+      <li class="active"><a href="course-list.html" >Course List</a></li>
+      <li><a href="#" ng-click="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" ng-controller="formController">
+	<div class="list-group" href="course-list-detail.html">
+	  <a ng-repeat="item in items" item="courseitems"
+	      			href="course-list-detail.html"
+	      			ui-sref="app.course-detail({objectId: $index})" class="list-group-item">
+                    
+                     <h2>{{item.CourseName}}</h2>
+      <p>Instructor: {{item.Instructor.firstname}} <span>{{item.Instructor.lastname}}</span> </p>
+      <p>{{item.DayArray}}</p>
+                    
+        </a>
+
+
+	</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>signup</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  
+
+
+  <!-- Parse Server JS SDK Credentials  -->
+<script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
+<script type="text/javascript">Parse.initialize("myAppId"); Parse.serverURL = 'http://45.55.141.129:1337/parse';</script>
+
+<script>
+  // define angular module/app
+  var formApp = angular.module('formApp', []);
+
+ // create angular controller and pass in $scope and $http
+   formApp.controller('LoginController',function($scope,$window){
+	   
+	           $scope.data = {};
+
+	   
+	    $scope.teacherSignupEmail = function(){
+	   //Create a new user on Parse
+        var user = new Parse.User();
+        user.set("firstname",$scope.data.firstname);
+        user.set("lastname",$scope.data.lastname);
+        user.set("username", $scope.data.username);
+        user.set("password", $scope.data.password);
+        user.set("email", $scope.data.email);
+        user.set("bannerID",$scope.data.bannerId);
+        user.set("type","Teacher");
+
+
+
+  // other fields can be set just like with Parse.Object
+ // user.set("somethingelse", "like this!");
+
+  user.signUp(null, {
+    success: function(user) {
+      // Hooray! Let them use the app now.
+      alert("Success! You are now registered");
+	  	$window.location.href = 'teacher-home.html';
+
+      //alert("You Are Now Registered");
+
+    },
+    error: function(user, error) {
+      // Show the error message somewhere and let the user try again.
+
+      alert("Error: " + error.code + " " + error.message);
+    }
+  });
+  };
+
+   });
+
+</script>
+</head>
+
+<body ng-app="formApp">
+ <!-- PAGE TITLE -->
+  <div class="container" ng-controller="LoginController">
+    <h1><span></span> QRHere Teacher Portal - Register</h1>
+  </div>
+
+  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+  <div id="messages"></div>
+
+  <!-- FORM -->
+  <form>
+  <!--First Name -->
+  <div id="first-group" class="form-group">
+      <label>First Name</label>
+      <input type="text" name="firstname" class="form-control" placeholder="First Name" ng-model="data.firstname">
+      <span class="help-block"></span>
+    </div>
+    
+     <!--Last Name -->
+  <div id="last-group" class="form-group">
+      <label>Last Name</label>
+      <input type="text" name="lastname" class="form-control" placeholder="Last Name" ng-model="data.lastname">
+      <span class="help-block"></span>
+    </div>
+  
+    <!-- Username -->
+    <div id="name-group" class="form-group">
+      <label>Username</label>
+      <input type="text" name="username" class="form-control" placeholder="Username" ng-model="data.username">
+      <span class="help-block"></span>
+    </div>
+    
+     <!--Email -->
+  <div id="email-group" class="form-group">
+      <label>E-Mail</label>
+      <input type="text" name="email" class="form-control" placeholder="E-Mail" ng-model="data.email">
+      <span class="help-block"></span>
+    </div>
+
+    <!-- Password -->
+    <div id="password-group" class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" ng-model="data.password">
+      <span class="help-block"></span>
+    </div>
+    
+         <!--Banner ID -->
+  <div id="banner-group" class="form-group">
+      <label>Banner ID</label>
+      <input type="text" name="bannerid" class="form-control" placeholder="Enter 9 digits" ng-model="data.bannerId">
+      <span class="help-block"></span>
+    </div>
+
+  
+
+    <!-- SUBMIT BUTTON -->
+    <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="teacherSignupEmail()">
+      <span class="glyphicon glyphicon-lock"></span> Sign Up
+    </button>
+  </form>
+  
+
+
+</body>
+
+</html>

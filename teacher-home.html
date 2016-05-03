@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>home</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+
+ <!-- LOAD JQUERY -->
+    <!-- when building an angular app, you generally DO NOT want to use jquery -->
+    <!-- we are breaking this rule here because jQuery's $.param will help us send data to our PHP script so that PHP can recognize it -->
+    <!-- this is jQuery's only use. avoid it in Angular apps and if anyone has tips on how to send data to a PHP script w/o jQuery, please state it in the comments -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  
+
+  
+  <!-- Parse Server JS SDK Credentials  -->
+<script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
+<script type="text/javascript">Parse.initialize("myAppId"); Parse.serverURL = 'http://45.55.141.129:1337/parse';</script>
+
+<script>
+  var formApp = angular.module('formApp', []);
+
+// create angular controller and pass in $scope and $http
+   formApp.controller('formController',function($scope){
+	       var currentUser = Parse.User.current();
+		   
+		   $scope.logout = function(){
+			    //logout current user
+        if ( currentUser ) {
+            Parse.User.logOut();
+			$window.location.href = 'login.html';
+
+		   }
+		   }
+
+   });
+	
+
+
+</script>
+
+
+
+</head>
+
+<body ng-app="formApp">
+
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">QRHere - Teacher Portal</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="teacher-home.html">Home</a></li>
+      <li><a href="register-course.html">Register a Course</a></li>
+      <li><a href="course-list.html">Course List</a></li>
+      <li><a href="#" ng-click="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+  <h3>Hello, {{currentUser.get('firstname')}}</h3> <span>{{currentUser.get('lastname')}}</span>
+  <p>Welcome to the QRHere Teacher portal page. You can manage your classes on the top</p>
+</div>
+
+</body>
+</html>
