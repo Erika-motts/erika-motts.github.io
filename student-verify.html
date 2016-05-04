@@ -48,6 +48,7 @@
 
             attendance.set("Instructor", $scope.course.instructor);
             attendance.set("lastname", $scope.course.lastname);
+			attendance.set("ClassName", $scope.course.classname);
 			
 			 attendance.save(null, {
                 success: function(Attendance) {
@@ -101,14 +102,14 @@
 
     <!-- Instructors Name -->
     <div id="superhero-group" class="form-group">
-      <label>Instructions</label>
+      <label>Instructor Name</label>
       <input type="text" name="superheroAlias" class="form-control" placeholder="Ex. Kelvin Bryant" ng-model="course.instructor">
       <span class="help-block"></span>
     </div>
     
      <div id="class-group" class="form-group">
-      <label>Instructions</label>
-      <input type="text" name="className" class="form-control" placeholder="Ex. Class Name" ng-model="course.classname">
+      <label>Class Name</label>
+      <input type="text" name="className" class="form-control" placeholder="Ex. Computer Architecture" ng-model="course.classname">
       <span class="help-block"></span>
     </div>
 

@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Attendance</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  
+
+  
+  <!-- Parse Server JS SDK Credentials  -->
+<script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
+<script type="text/javascript">Parse.initialize("myAppId"); Parse.serverURL = 'http://45.55.141.129:1337/parse';</script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+  
+  
+  <!-- -->
+  <script>
+    var formApp = angular.module('formApp', []);
+
+   formApp.controller('formController',function($scope){
+	   
+	   $scope.finduser = {}
+	   
+	   $scope.findData = function(){
+		   
+		var Attendance = Parse.Object.extend("Attendance");
+		var attendance = new Parse.Query(Attendance);
+		//attendance.matchesKeyInQuery("lastname", $scope.finduser.lastname);
+		attendance.equalTo("Instructor", $scope.finduser.instructor);
+		attendance.equalTo("ClassName", $scope.finduser.classname);
+		attendance.equalTo("createdAt",$scope.finduser.date);
+
+
+		attendance.find({
+  			success: function(results) {
+   			 alert("Successfully retrieved " + results.length + " scores.");
+   			 // Do something with the returned Parse.Object values
+    			for (var i = 0; i < results.length; i++) {
+    			  var object = results[i];
+     		 alert(object.id + ' - ' + object.get('lastname'));
+   		 }	
+ 	 },
+  		error: function(error) {
+   		 alert("Error: " + error.code + " " + error.message);
+  			}
+		});
+	   }
+	   
+});
+
+
+</script>
+
+
+</head>
+
+<body ng-app="formApp">
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">QRHere - Teacher Portal</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="teacher-home.html">Home</a></li>
+      <li><a href="register-course.html">Register a Course</a></li>
+      <li><a href="course-list.html">Course List</a></li>
+      <li class="active"><a href="attendance.html">Attendance</a></li>
+      <li><a href="#" ng-click="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container" ng-controller="formController">
+<div class="col-md-6 col-md-offset-3">
+
+  <!-- PAGE TITLE -->
+  <div class="page-header">
+    <h1><span></span></h1>
+  </div>
+
+  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+  <div id="messages"></div>
+
+  <!-- FORM -->
+  <form>
+  
+    <!-- Name -->
+    <!--
+    <div id="name-group" class="form-group">
+      <label>Last Name</label>
+      <input type="text" name="name" class="form-control" placeholder="Ex. Reeves" ng-model="finduser.lastname">
+      <span class="help-block"></span>
+    </div>
+    -->
+
+    <!-- Instructors Name -->
+    <div id="superhero-group" class="form-group">
+      <label>Instructor</label>
+      <input type="text" name="superheroAlias" class="form-control" placeholder="Ex. Kelvin Bryant" ng-model="finduser.instructor">
+      <span class="help-block"></span>
+    </div>
+    
+     <div id="class-group" class="form-group">
+      <label>Class Name</label>
+      <input type="text" name="className" class="form-control" placeholder="Ex. Class Name" ng-model="finduser.classname">
+      <span class="help-block"></span>
+    </div>
+    
+      <div id="class-date" class="form-group">
+      <label>Date</label>
+      <input type="text" name="className" class="form-control" placeholder="12/24/2015" ng-model="finduser.date">
+      <span class="help-block"></span>
+    </div>
+    
+    
+    
+    <div class="list-group" href="course-list-detail.html">
+	  <a ng-repeat="result in results" item="attendance" class="list-group-item">
+                    
+      <h2>{{result.lastname}}</h2>
+      <!--<p>Instructor: {{item.Instructor.lastname}} <span>{{item.Instructor.lastname}}</span> </p> -->
+      <p>Here on {{result.createdAt}}</p>
+                    
+        </a>
+
+
+	</div>
+
+    <!-- SUBMIT BUTTON -->
+    <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="findData()">
+      <span class="glyphicon glyphicon-flash"></span> Submit!
+    </button>
+  </form>
+
+</div>
+
+
+
+</div>
+</body>
+</html>
