@@ -39,6 +39,10 @@
 			
 		}
 
+$scope.register = function(){
+		$window.location.href = 'signup.html';
+
+}
 	
 	
 	$scope.login = function(){
@@ -98,7 +102,7 @@
     </button>
     
         <!-- SIGNUP BUTTON -->
-    <button type="submit" class="btn btn-primary btn-lg btn-block" href="signup.html">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="register()">
       <span class="glyphicon glyphicon-lock"></span> Register
     </button>
   </form>
