@@ -24,7 +24,7 @@
 
 // create angular controller and pass in $scope and $http
    formApp.controller('formController',function($scope){
-	       var currentUser = Parse.User.current();
+	       $scope.currentUser = Parse.User.current();
 		   
 		   $scope.logout = function(){
 			    //logout current user
@@ -63,7 +63,7 @@
   </div>
 </nav>
   
-<div class="container">
+<div class="container" ng-controller="formController">
   <h3>Hello, {{currentUser.get('firstname')}}</h3> <span>{{currentUser.get('lastname')}}</span>
   <p>Welcome to the QRHere Teacher portal page. You can manage your classes on the top</p>
 </div>
