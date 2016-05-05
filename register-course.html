@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <title>Register a Course</title>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<style>
+    .center {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
 
+
+</style>
 
  <!-- LOAD JQUERY -->
     <!-- when building an angular app, you generally DO NOT want to use jquery -->
@@ -23,7 +32,7 @@
   var formApp = angular.module('formApp', []);
 
 // create angular controller and pass in $scope and $http
-   formApp.controller('formController',function($scope){
+   formApp.controller('formController',function($scope,$window){
 	       var currentUser = Parse.User.current();
 		   
 	      $scope.logout = function(){
@@ -84,6 +93,7 @@
 
 
                     ('New object created with objectId: ' + Course.id);
+                    $window.location.href= 'course-list.html';
                 },
                 error: function(Course, error) {
             
@@ -119,7 +129,7 @@
   </div>
 </nav>
 
-<div id="container" ng-controller="formController">
+<div id="container" ng-controller="formController" class="center">
 <form>
   <fieldset class="form-group">
     <label for="coursename">Course Name</label>
@@ -136,7 +146,7 @@
   
    <fieldset class="form-group">
     <label for="crn">CRN</label>
-    <input type="number" class="form-control" id="crn" placeholder="Section Number" ng-model="coursedata.crn" required>
+    <input type="number" class="form-control" id="crn" placeholder="CRN" ng-model="coursedata.crn" required>
    <!-- <span ng-show="!crn.length">Please enter CRN code</span>-->
   </fieldset>
   
@@ -148,7 +158,10 @@
 <label class="checkbox-inline" ><input type="checkbox" value="" ng-model="daycheckbox.checked.Thursday">Thursday</label>
 <label class="checkbox-inline"><input type="checkbox" value="" ng-model="daycheckbox.checked.Friday">Friday</label>
   
-   <!-- SUBMIT BUTTON -->
+    <br>
+    <br>
+    <br>
+
     <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="submit()">
       <span></span> Add Course
     </button>
