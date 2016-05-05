@@ -69,7 +69,7 @@ var formApp = angular.module('formApp', []);
 })
 
 // Course List Controller
-   formApp.controller('formController',function($scope,CourseList){
+   formApp.controller('formController',function($scope,CourseList,$window){
 	   var currentUser = Parse.User.current();
 	      $scope.logout = function(){
 			    //logout current user
@@ -80,18 +80,17 @@ var formApp = angular.module('formApp', []);
 
 		   }
 		  }
+		  
+	$scope.onItemDelete=function(item){
+        CourseList.delete(item.objectId);
+        $scope.items.splice($scope.items.indexOf(item),1);
+    }
 
 	   
 	   
 	   $scope.showQR = function(){
-		var qrcode = new QRCode("qrcode", {
-		text: "http://jindo.dev.naver.com/collie",
-		width: 128,
-		height: 128,
-		colorDark : "#000000",
-		colorLight : "#ffffff",
-		correctLevel : QRCode.CorrectLevel.H
-		});
+		$window.location.href = 'course-list-detail.html';
+
 	}
 	
 	  CourseList.getAll().success(function(data){
@@ -130,17 +129,27 @@ var formApp = angular.module('formApp', []);
 <div class="container" ng-controller="formController">
 	<div class="list-group" href="course-list-detail.html">
 	  <a ng-repeat="item in items" item="courseitems"
-	      			href="course-list-detail.html"
+	      			
 	      			ui-sref="app.course-detail({objectId: $index})" class="list-group-item">
                     
                      <h2>{{item.CourseName}}</h2>
       <p>Instructor: {{item.Instructor.firstname}} <span>{{item.Instructor.lastname}}</span> </p>
-      <p>{{item.DayArray}}</p>
+      
+            <button type="submit" class="btn btn-danger btn-lg btn-block" ng-click="onItemDelete(item)">
+        <span class="glyphicon glyphicon-flash"></span> Delete
+    </button>
+              <button type="submit" class="btn btn-info btn-lg btn-block" ng-click="showQR()">
+        <span class="glyphicon glyphicon-qrcode"></span> Show QR Code
+    </button>
                     
         </a>
+        
+ 
 
 
 	</div>
+    
+ 
 
 </div>
 </body>
