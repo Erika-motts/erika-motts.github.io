@@ -47,12 +47,19 @@ $scope.register = function(){
 	
 	$scope.login = function(){
 		  	Parse.User.logIn($scope.courses.username, $scope.courses.password, {
+				
+				
+				
 		  	success: function(user) {
 		  		// Do stuff after successful login.
-		  		console.log(user);
-		  		alert("Success! You are now log in.");
-				$window.location.href = 'teacher-home.html';
-       
+				if (currentUser = "Student"){
+				   alert("This is only for teachers");	
+				}
+				else{
+		  			console.log(user);
+		  			alert("Success! You are now log in.");
+					$window.location.href = 'teacher-home.html';
+				}
     	},
 		error: function(user, error) {
 		// The login failed. Check error to see why.
