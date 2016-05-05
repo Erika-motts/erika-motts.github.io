@@ -25,7 +25,7 @@ var formApp = angular.module('formApp', []);
 	
     return {
         getAll:function(){
-            return $http.get('http://45.55.141.129:1337/parse/classes/Course?include=CreatedBy',{
+            return $http.get('http://45.55.141.129:1337/parse/classes/Course?include=Instructor',{
                 headers:{
                     'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
                     'Content-Type':'application/json'                     }
@@ -76,8 +76,6 @@ var formApp = angular.module('formApp', []);
         if ( currentUser ) {
             Parse.User.logOut();
 			$window.location.href = 'login.html';
-
-
 		   }
 		  }
 		  
@@ -94,10 +92,9 @@ var formApp = angular.module('formApp', []);
 	}
 	
 	  CourseList.getAll().success(function(data){
-		$scope.items = data.results;	
-		 
+		$scope.items = data.results;	 
 	}).then(function(result) {
-   // _this.breweries = result.data.breweries;
+   _this.breweries = result.data.breweries;
 	
   })
 	 

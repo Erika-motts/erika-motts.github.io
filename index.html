@@ -47,12 +47,9 @@ $scope.register = function(){
 	
 	$scope.login = function(){
 		  	Parse.User.logIn($scope.courses.username, $scope.courses.password, {
-				
-				
-				
 		  	success: function(user) {
 		  		// Do stuff after successful login.
-				if (currentUser = "Student"){
+				if (Parse.User.current() == "Student"){
 				   alert("This is only for teachers");	
 				}
 				else{

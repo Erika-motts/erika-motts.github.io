@@ -67,7 +67,6 @@
             });
         };
 
-		//$scope.
 
 
         $scope.submit = function () {
@@ -77,25 +76,17 @@
             course.set("CourseName", $scope.coursedata.CourseName);
             course.set("crn", $scope.coursedata.crn);
             course.set("SectionNumber", $scope.coursedata.SectionNumber);
-            course.set("DayArray", $scope.daycheckbox.checked );
-            course.set("Instructor",Parse.User.current());
+            course.set("DayArray", $scope.daycheckbox.checked);
+            course.set("Instructor", Parse.User.current());
 			
-			if ($scope.coursedata.CourseName == ""){
-			alert("Empty");	
-			}
-/*
-          if(course.equalTo("crn", $scope.coursedata.crn)){
-            alert("Course Already Exist");
-          }
-		 */ 
+			
+			
+
             course.save(null, {
                 success: function(Course) {
                     // Execute any logic that should take place after the object is saved.
                     alert('Your class has been uploaded');
-                                      //$state.go('app.courselist');
-
-
-                    ('New object created with objectId: ' + Course.id);
+                    //('New object created with objectId: ' + Course.id);
 					$window.location.href = 'course-list.html'
 	                },
                 error: function(Course, error) {
