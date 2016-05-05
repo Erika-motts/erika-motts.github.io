@@ -28,18 +28,25 @@
 	   
 	   $scope.findData = function(){
 		   
+		   
+		$scope.finduser.date = new Date()
+		   
 		var Attendance = Parse.Object.extend("Attendance");
 		var attendance = new Parse.Query(Attendance);
+		var convertDate = $scope.finduser.date;
+		convertDate = new Date();
+		
 		//attendance.matchesKeyInQuery("lastname", $scope.finduser.lastname);
-		attendance.equalTo("Instructor", $scope.finduser.instructor);
-		attendance.equalTo("ClassName", $scope.finduser.classname);
-		attendance.equalTo("createdAt",$scope.finduser.date);
+		attendance.contains("Instructor", $scope.finduser.instructor);
+		attendance.contains("ClassName", $scope.finduser.classname);
+		//attendance.contains("createdAt",$scope.finduser.date);
 
 
 		attendance.find({
   			success: function(results) {
    			 alert("Successfully retrieved " + results.length + " scores.");
    			 // Do something with the returned Parse.Object values
+			 $scope.dataresults = results;
     			for (var i = 0; i < results.length; i++) {
     			  var object = results[i];
      		 alert(object.id + ' - ' + object.get('lastname'));
@@ -113,18 +120,18 @@
     
       <div id="class-date" class="form-group">
       <label>Date</label>
-      <input type="text" name="className" class="form-control" placeholder="12/24/2015" ng-model="finduser.date">
+      <input type="text"   data-date-format="mm/dd/yyyy"
+ name="className" class="form-control" placeholder="12/24/2015" ng-model="finduser.date">
       <span class="help-block"></span>
     </div>
     
     
     
     <div class="list-group" href="course-list-detail.html">
-	  <a ng-repeat="result in results" item="attendance" class="list-group-item">
+	  <a ng-repeat="dataresult in dataresults" item="attendance" class="list-group-item">
                     
-      <h2>{{result.lastname}}</h2>
-      <!--<p>Instructor: {{item.Instructor.lastname}} <span>{{item.Instructor.lastname}}</span> </p> -->
-      <p>Here on {{result.createdAt}}</p>
+      <p>{{dataresult.get('lastname')}}</p>
+      <p>Here on {{dataresult.createdAt | date:"medium"}}</p>
                     
         </a>
 

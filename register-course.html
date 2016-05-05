@@ -28,11 +28,10 @@
 		   
 	      $scope.logout = function(){
 			    //logout current user
-        if ( currentUser ) {
             Parse.User.logOut();
 			$window.location.href = 'login.html';
 
-		   }
+		   
 		  }
 
 		   
@@ -67,18 +66,16 @@
             var Course = Parse.Object.extend("Course");
             var course = new Course();
 
-
-
             course.set("CourseName", $scope.coursedata.CourseName);
             course.set("crn", $scope.coursedata.crn);
             course.set("SectionNumber", $scope.coursedata.SectionNumber);
             course.set("DayArray", $scope.daycheckbox.checked );
             course.set("Instructor",Parse.User.current());
 /*
-          if (course.equalTo("crn",course)){
+          if(course.equalTo("crn", $scope.coursedata.crn)){
             alert("Course Already Exist");
           }
-		  */
+		 */ 
             course.save(null, {
                 success: function(Course) {
                     // Execute any logic that should take place after the object is saved.
@@ -118,7 +115,6 @@
       <li class="active"><a href="register-course.html">Register a Course</a></li>
       <li><a href="course-list.html">Course List</a></li>
       <li><a href="attendance.html">Attendance</a></li>
-      <li><a href="#" ng-click="logout()">Logout</a></li>
     </ul>
   </div>
 </nav>
@@ -127,20 +123,20 @@
 <form>
   <fieldset class="form-group">
     <label for="coursename">Course Name</label>
-    <input type="text" class="form-control" id="coursename" placeholder="Course Name" ng-model="coursedata.CourseName">
+    <input type="text" class="form-control" id="coursename" placeholder="Course Name" ng-model="coursedata.CourseName" required>
    <!-- <span ng-show="!coursename.length">Please enter a course</span>-->
 
   </fieldset>
     <fieldset class="form-group">
     <label for="sectionnumber">Section Number</label>
-    <input type="text" class="form-control" id="sectionnumber" placeholder="Section Number" ng-model="coursedata.SectionNumber">
+    <input type="text" class="form-control" id="sectionnumber" placeholder="Section Number" ng-model="coursedata.SectionNumber" required>
    <!-- <span ng-show="!sectionnumber.length">Enter a section number</span>-->
 
   </fieldset>
   
    <fieldset class="form-group">
     <label for="crn">CRN</label>
-    <input type="number" class="form-control" id="crn" placeholder="Section Number" ng-model="coursedata.crn">
+    <input type="number" class="form-control" id="crn" placeholder="Section Number" ng-model="coursedata.crn" required>
    <!-- <span ng-show="!crn.length">Please enter CRN code</span>-->
   </fieldset>
   

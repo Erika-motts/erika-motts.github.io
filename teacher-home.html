@@ -25,14 +25,13 @@
 // create angular controller and pass in $scope and $http
    formApp.controller('formController',function($scope){
 	       $scope.currentUser = Parse.User.current();
+		   var signout = Parse.User.logOut();
 		   
 		   $scope.logout = function(){
 			    //logout current user
-        if ( currentUser ) {
             Parse.User.logOut();
-			$window.location.href = 'login.html';
+			$window.location.href = 'index.html';
 
-		   }
 		   }
 
    });
@@ -58,7 +57,6 @@
       <li><a href="register-course.html">Register a Course</a></li>
       <li><a href="course-list.html">Course List</a></li>
       <li><a href="attendance.html">Attendance</a></li>
-      <li><a href="#" ng-click="logout()">Logout</a></li>
     </ul>
   </div>
 </nav>
@@ -66,6 +64,12 @@
 <div class="container" ng-controller="formController">
   <h3>Hello, {{currentUser.get('firstname')}}</h3> <span>{{currentUser.get('lastname')}}</span>
   <p>Welcome to the QRHere Teacher portal page. You can manage your classes on the top</p>
+  
+  
+      <!-- SUBMIT BUTTON -->
+    <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="logout()">
+      <span class="glyphicon glyphicon-flash"></span> Log Out
+    </button>
 </div>
 
 </body>

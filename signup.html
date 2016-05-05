@@ -20,20 +20,20 @@
   var formApp = angular.module('formApp', []);
 
  // create angular controller and pass in $scope and $http
-   formApp.controller('LoginController',function($scope,$window){
+   formApp.controller('formController',function($scope,$window){
 	   
-	           $scope.data = {};
+	     $scope.signupdata = {};
 
 	   
-	    $scope.teacherSignupEmail = function(){
+	     $scope.register = function(){
 	   //Create a new user on Parse
         var user = new Parse.User();
-        user.set("firstname",$scope.data.firstname);
-        user.set("lastname",$scope.data.lastname);
-        user.set("username", $scope.data.username);
-        user.set("password", $scope.data.password);
-        user.set("email", $scope.data.email);
-        user.set("bannerID",$scope.data.bannerId);
+        user.set("firstname",$scope.signupdata.firstname);
+        user.set("lastname",$scope.signupdata.lastname);
+        user.set("username", $scope.signupdata.username);
+        user.set("password", $scope.signupdata.password);
+        user.set("email", $scope.signupdata.email);
+        user.set("bannerID",$scope.signupdata.bannerId);
         user.set("type","Teacher");
 
 
@@ -45,9 +45,8 @@
     success: function(user) {
       // Hooray! Let them use the app now.
       alert("Success! You are now registered");
-	  	$window.location.href = 'teacher-home.html';
-
       //alert("You Are Now Registered");
+                  //$state.go('app.student');
 
     },
     error: function(user, error) {
@@ -57,17 +56,16 @@
     }
   });
   };
-
-   });
+	   
+});
 
 </script>
 </head>
 
 <body ng-app="formApp">
  <!-- PAGE TITLE -->
-  <div class="container" ng-controller="LoginController">
+  <div class="container" ng-controller="formController">
     <h1><span></span> QRHere Teacher Portal - Register</h1>
-  </div>
 
   <!-- SHOW ERROR/SUCCESS MESSAGES -->
   <div id="messages"></div>
@@ -77,52 +75,52 @@
   <!--First Name -->
   <div id="first-group" class="form-group">
       <label>First Name</label>
-      <input type="text" name="firstname" class="form-control" placeholder="First Name" ng-model="data.firstname">
+      <input type="text" name="firstname" class="form-control" placeholder="First Name" ng-model="signupdata.firstname">
       <span class="help-block"></span>
     </div>
     
      <!--Last Name -->
   <div id="last-group" class="form-group">
       <label>Last Name</label>
-      <input type="text" name="lastname" class="form-control" placeholder="Last Name" ng-model="data.lastname">
+      <input type="text" name="lastname" class="form-control" placeholder="Last Name" ng-model="signupdata.lastname">
       <span class="help-block"></span>
     </div>
   
     <!-- Username -->
     <div id="name-group" class="form-group">
       <label>Username</label>
-      <input type="text" name="username" class="form-control" placeholder="Username" ng-model="data.username">
+      <input type="text" name="username" class="form-control" placeholder="Username" ng-model="signupdata.username">
       <span class="help-block"></span>
     </div>
     
      <!--Email -->
   <div id="email-group" class="form-group">
       <label>E-Mail</label>
-      <input type="text" name="email" class="form-control" placeholder="E-Mail" ng-model="data.email">
+      <input type="text" name="email" class="form-control" placeholder="E-Mail" ng-model="signupdata.email">
       <span class="help-block"></span>
     </div>
 
     <!-- Password -->
     <div id="password-group" class="form-group">
       <label>Password</label>
-      <input type="password" name="password" class="form-control" placeholder="Password" ng-model="data.password">
+      <input type="password" name="password" class="form-control" placeholder="Password" ng-model="signupdata.password">
       <span class="help-block"></span>
     </div>
     
          <!--Banner ID -->
   <div id="banner-group" class="form-group">
       <label>Banner ID</label>
-      <input type="text" name="bannerid" class="form-control" placeholder="Enter 9 digits" ng-model="data.bannerId">
+      <input type="text" name="bannerid" class="form-control" placeholder="Enter 9 digits" ng-model="signupdata.bannerId">
       <span class="help-block"></span>
     </div>
 
   
 
-    <!-- SUBMIT BUTTON -->
-    <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="teacherSignupEmail()">
-      <span class="glyphicon glyphicon-lock"></span> Sign Up
+    <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="register()">
+      <span class="glyphicon glyphicon-lock"></span> Register
     </button>
   </form>
+  </div>
   
 
 
