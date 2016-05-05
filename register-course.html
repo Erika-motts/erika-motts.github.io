@@ -23,7 +23,7 @@
   var formApp = angular.module('formApp', []);
 
 // create angular controller and pass in $scope and $http
-   formApp.controller('formController',function($scope){
+   formApp.controller('formController',function($scope,$window){
 	       var currentUser = Parse.User.current();
 		   
 	      $scope.logout = function(){
@@ -84,7 +84,8 @@
 
 
                     ('New object created with objectId: ' + Course.id);
-                },
+					$window.location.href = 'course-list.html'
+	                },
                 error: function(Course, error) {
             
                   required: "Please Select Days this course is offered."

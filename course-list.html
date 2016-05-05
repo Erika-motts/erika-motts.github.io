@@ -95,14 +95,13 @@ var formApp = angular.module('formApp', []);
 	}
 	
 	  CourseList.getAll().success(function(data){
-	if (currentUser){
 		$scope.items = data.results;	
-		 }
+		 
 	}).then(function(result) {
    // _this.breweries = result.data.breweries;
 	
   })
-	  
+	 
 
    });
 </script>
