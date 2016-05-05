@@ -23,7 +23,7 @@
   var formApp = angular.module('formApp', []);
 
 // create angular controller and pass in $scope and $http
-   formApp.controller('formController',function($scope){
+   formApp.controller('formController',function($scope,$window){
 	       $scope.currentUser = Parse.User.current();
 		   var signout = Parse.User.logOut();
 		   
@@ -67,7 +67,7 @@
   
   
       <!-- SUBMIT BUTTON -->
-    <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="logout()">
+    <button type="submit" class="btn btn-danger btn-lg btn-block" ng-click="logout()">
       <span class="glyphicon glyphicon-flash"></span> Log Out
     </button>
 </div>

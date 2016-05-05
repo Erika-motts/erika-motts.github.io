@@ -36,7 +36,6 @@
 		var convertDate = $scope.finduser.date;
 		convertDate = new Date();
 		
-		//attendance.matchesKeyInQuery("lastname", $scope.finduser.lastname);
 		attendance.contains("Instructor", $scope.finduser.instructor);
 		attendance.contains("ClassName", $scope.finduser.classname);
 		//attendance.contains("createdAt",$scope.finduser.date);
@@ -78,7 +77,6 @@
       <li><a href="register-course.html">Register a Course</a></li>
       <li><a href="course-list.html">Course List</a></li>
       <li class="active"><a href="attendance.html">Attendance</a></li>
-      <li><a href="#" ng-click="logout()">Logout</a></li>
     </ul>
   </div>
 </nav>
